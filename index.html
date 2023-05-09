@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Dosis:wght@500;600&family=Foldit&family=Instrument+Serif&family=Poppins:wght@300;400;500;600&family=Rajdhani:wght@600&family=Source+Code+Pro&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- input section-->
+    <p>Search Country</p>
+    <div class="container">
+       
+        <form>
+            <div class="search">
+                <input type="text" id="countryName" placeholder="Enter a country name hear..." />
+                <input type="button" class="button" onclick="searchData()" value="Search" />
+            </div>
+        </form>
+        <div id="result"> </div> 
+    </div>
+   
+    <!-- script -->
+    <script>
+        function searchData() {
+            var country = countryName.value;
+            console.log(country);
+            fetch(`https://restcountries.com/v3.1/name/${country}?fullText=true`)
+                .then((res) => res.json()) // array of data (json->array)
+                .then(data => displayCountry(data)) // function call to display data
+                .catch(err => {
+                    alert('Failed to fetch country details') // error
+                })
+        }
+        function displayCountry(data){
+            var capital = data[0].capital[0];
+            var img = data[0].flags.svg;
+            var commonName = data[0].name.common;
+            var continents = data[0].continents[0];
+            var currencies =Object.keys(data[0].currencies)[0];
+            var currency = data[0].currencies[Object.keys(data[0].currencies)].name;
+            var lan =Object.values(data[0].languages).toString().split(",").join(", ");
+            var population=data[0].population;
+            result.innerHTML=`
+            <img src="${img}" class="flag-img"/>
+            <h1>${commonName}</h1>
+            <div class="wrapper">
+                <div class="data-wrapper">
+                    <h3>Capital:</h3>
+                    <span>${capital}</span>
+                </div>
+            </div> 
+            <div class="wrapper">
+                <div class="data-wrapper">
+                    <h3>Continent:</h3>
+                    <span>${continents}</span>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="data-wrapper">
+                    <h3>Population:</h3>
+                    <span>${population}</span>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="data-wrapper">
+                    <h3>Currency:</h3>
+                    <span>${currency} - ${currencies}</span>
+                </div>
+            </div>
+            <div class="wrapper">
+                <div class="data-wrapper">
+                    <h3>Common Languages:</h3>
+                    <span>${lan}</span>
+                </div>
+            </div>       
+            `;
+
+        }
+    </script>
+</body>
+</html>
