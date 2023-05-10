@@ -12,7 +12,7 @@ font-family: 'Source Code Pro', monospace; */
     margin: 0;
     box-sizing: border-box;
     font-family: 'Dosis', sans-serif;
-   
+    text-transform: capitalize;
 }
 body{
     background-image: url('./img.jpg');
@@ -97,6 +97,11 @@ p{
 .container span{
     color: #040324;
 }
-.container h3{
-    text-align: center;
+.container h2{
+    text-align: start;
+    font-size: .9em;
+    font-weight: 500;
+    color: red;
+    font-family: 'Dosis', sans-serif;
+    text-transform: capitalize;
 }
